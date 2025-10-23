@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin — Редактор свадьбы</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{ --bg:#0b0b10; --card:#12121a; --muted:#9aa0a6; --text:#f5f7fb; --brand:#ffd166; --radius:16px; --ok:#6ee7b7; --bad:#f87171; }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;background:#0b0b10;color:#f5f7fb}
+    a{color:inherit}
+    .wrap{display:grid;grid-template-columns:380px 1fr;gap:16px;min-height:100vh}
+    @media (max-width:1000px){.wrap{grid-template-columns:1fr} .preview{min-height:60vh}}
+    header{padding:16px 20px;position:sticky;top:0;background:rgba(0,0,0,.4);backdrop-filter: blur(6px);border-bottom:1px solid rgba(255,255,255,.08);display:flex;gap:12px;align-items:center}
+    .brand{font-weight:800;letter-spacing:.02em}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);cursor:pointer}
+    .btn:hover{background:rgba(255,255,255,.09)}
+    .btn.primary{background:linear-gradient(135deg,var(--brand),#ff9f1c);color:#1b1300;border:none}
+    .btn.ok{background:rgba(110,231,183,.18);border-color:rgba(110,231,183,.35);color:#022}
+    .btn.bad{background:rgba(248,113,113,.18);border-color:rgba(248,113,113,.35)}
+    .side{padding:16px;overflow:auto}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:16px;margin-bottom:12px}
+    .card h3{margin:0 0 8px}
+    label{display:block;font-size:12px;color:var(--muted);margin-top:8px;margin-bottom:6px}
+    input,select,textarea{width:100%;padding:10px 12px;border-radius:12px;background:#0f1117;border:1px solid rgba(255,255,255,.08);color:#f5f7fb}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .list{display:grid;gap:8px}
+    .item{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
+    .muted{color:var(--muted);font-size:12px}
+    .preview{border-left:1px solid rgba(255,255,255,.08);padding:12px}
+    iframe{width:100%;height:calc(100vh - 68px);border:none;border-radius:16px;background:#000}
+    .bar{display:flex;gap:8px;align-items:center;margin-left:auto}
+    .toast{position:fixed;right:16px;bottom:16px;padding:12px 14px;border-radius:12px;background:rgba(110,231,183,.12);border:1px solid rgba(110,231,183,.35);display:none}
+    .err{background:rgba(248,113,113,.12);border-color:rgba(248,113,113,.35)}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">Админ — Редактор свадебного сайта</div>
+    <div class="bar">
+      <button class="btn ok" id="btnReload">Обновить конфиг</button>
+      <button class="btn primary" id="btnSave">Сохранить</button>
+      <button class="btn" id="btnRefresh">Обновить превью</button>
+    </div>
+  </header>
+  <div class="wrap">
+    <div class="side">
+      <div class="card">
+        <h3>Основное</h3>
+        <div class="row">
+          <div><label>Жених</label><input id="groom"></div>
+          <div><label>Невеста</label><input id="bride"></div>
+        </div>
+        <label>Теглайн</label><textarea id="tagline" rows="2"></textarea>
+        <div class="row">
+          <div><label>Дата/время (ISO, +06:00)</label><input id="dateISO"></div>
+          <div><label>Заголовок программы</label><input id="programTitle"></div>
+        </div>
+        <label>Адрес</label><input id="address">
+        <div class="row">
+          <div><label>Ссылка на карту</label><input id="mapUrl"></div>
+          <div><label>Instagram</label><input id="instagramUrl"></div>
+        </div>
+        <label>WhatsApp</label><input id="whatsapp">
+      </div>
+
+      <div class="card">
+        <h3>Медиа</h3>
+        <label>Hero изображение (URL)</label><input id="heroImage">
+        <label>Галерея</label><div class="list" id="galleryList"></div>
+        <button class="btn" id="addGallery">+ Фото</button>
+      </div>
+
+      <div class="card">
+        <h3>Музыка</h3>
+        <div class="row">
+          <div><label>Включить</label><select id="musicEnabled"><option value="true">Да</option><option value="false">Нет</option></select></div>
+          <div><label>Автовоспроизведение</label><select id="musicAuto"><option value="true">Да</option><option value="false">Нет</option></select></div>
+        </div>
+        <label>MP3 ссылка</label><input id="musicSrc">
+      </div>
+
+      <div class="card">
+        <h3>Программа вечера</h3>
+        <div class="list" id="scheduleList"></div>
+        <button class="btn" id="addSchedule">+ Пункт программы</button>
+      </div>
+
+      <div class="card">
+        <h3>Форма RSVP</h3>
+        <div class="row">
+          <div><label>Режим</label><select id="formMode"><option value="mailto">mailto</option><option value="endpoint">endpoint</option></select></div>
+          <div><label>Тема письма</label><input id="formSubject"></div>
+        </div>
+        <label>Email получателя</label><input id="formEmail">
+        <label>Endpoint (если endpoint)</label><input id="formEndpoint">
+      </div>
+      <div class="muted">Подсказка: после «Сохранить» нажмите «Обновить превью», чтобы увидеть изменения.</div>
+    </div>
+
+    <div class="preview"><iframe id="preview" src="/"></iframe></div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const $ = (s)=>document.querySelector(s);
+    const $$ = (s)=>Array.from(document.querySelectorAll(s));
+    function toast(msg, ok=true){ const el = $('#toast'); el.textContent = msg; el.className = 'toast ' + (ok ? '' : 'err'); el.style.display = 'block'; setTimeout(()=> el.style.display='none', 2200); }
+    function itemGallery(url=''){ const div=document.createElement('div'); div.className='item'; div.innerHTML=`<input value="${url}" placeholder="https://...jpg" class="galleryUrl"><button class="btn bad">Удалить</button>`; div.querySelector('button').onclick=()=>div.remove(); return div; }
+    function itemSchedule(time='', title=''){ const div=document.createElement('div'); div.className='item'; div.innerHTML=`<input value="${time}" placeholder="18:00" class="schTime"><input value="${title}" placeholder="Название пункта" class="schTitle"><button class="btn bad">Удалить</button>`; div.querySelector('button').onclick=()=>div.remove(); return div; }
+    async function loadCfg(){
+      const r = await fetch('/api/config'); const cfg = await r.json();
+      $('#groom').value = cfg.couple?.groom || ''; $('#bride').value = cfg.couple?.bride || ''; $('#tagline').value = cfg.tagline || '';
+      $('#dateISO').value = cfg.dateISO || ''; $('#programTitle').value = cfg.programTitle || ''; $('#address').value = cfg.address || '';
+      $('#mapUrl').value = cfg.mapUrl || ''; $('#instagramUrl').value = cfg.instagramUrl || ''; $('#whatsapp').value = cfg.whatsapp || '';
+      $('#heroImage').value = cfg.heroImage || ''; $('#musicEnabled').value = String(cfg.music?.enabled ?? false);
+      $('#musicAuto').value = String(cfg.music?.autoPlay ?? false); $('#musicSrc').value = cfg.music?.src || '';
+      $('#formMode').value = cfg.form?.mode || 'mailto'; $('#formSubject').value = cfg.form?.subject || ''; $('#formEmail').value = cfg.form?.emailTo || ''; $('#formEndpoint').value = cfg.form?.endpoint || '';
+      const g = $('#galleryList'); g.innerHTML=''; (cfg.gallery||[]).forEach(u=> g.appendChild(itemGallery(u)));
+      const s = $('#scheduleList'); s.innerHTML=''; (cfg.schedule||[]).forEach(it=> s.appendChild(itemSchedule(it.time, it.title)));
+    }
+    function collectCfg(){
+      const cfg = {
+        couple: { groom: $('#groom').value.trim(), bride: $('#bride').value.trim() },
+        tagline: $('#tagline').value.trim(), dateISO: $('#dateISO').value.trim(), programTitle: $('#programTitle').value.trim(),
+        address: $('#address').value.trim(), mapUrl: $('#mapUrl').value.trim(), instagramUrl: $('#instagramUrl').value.trim(), whatsapp: $('#whatsapp').value.trim(),
+        heroImage: $('#heroImage').value.trim(), gallery: $$('.galleryUrl').map(i=>i.value.trim()).filter(Boolean),
+        music: { enabled: $('#musicEnabled').value === 'true', src: $('#musicSrc').value.trim(), autoPlay: $('#musicAuto').value === 'true' },
+        schedule: $$('.schTime').map((_,i)=>({time: $$('.schTime')[i].value.trim(), title: $$('.schTitle')[i].value.trim()})).filter(x=>x.time||x.title),
+        form: { mode: $('#formMode').value, subject: $('#formSubject').value.trim(), emailTo: $('#formEmail').value.trim(), endpoint: $('#formEndpoint').value.trim() }
+      };
+      return cfg;
+    }
+    async function saveCfg(){ const cfg = collectCfg(); const r = await fetch('/api/config', {method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(cfg)}); if (r.ok){ toast('Сохранено'); document.getElementById('preview').contentWindow.location.reload(true);} else { toast('Ошибка сохранения', false);} }
+    $('#addGallery').onclick = ()=> $('#galleryList').appendChild(itemGallery(''));
+    $('#addSchedule').onclick = ()=> $('#scheduleList').appendChild(itemSchedule('',''));
+    $('#btnReload').onclick = loadCfg; $('#btnSave').onclick = saveCfg; $('#btnRefresh').onclick = ()=> $('#preview').contentWindow.location.reload();
+    loadCfg();
+  </script>
+</body>
+</html>

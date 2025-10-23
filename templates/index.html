@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b0b10" />
+    <title>Wedding Invite — Шаблон</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0b0b10; /* фон */
+        --card: #12121a; /* карточки */
+        --muted: #9aa0a6; /* вторичный текст */
+        --text: #f5f7fb; /* основной текст */
+        --brand: #ffd166; /* акцент */
+        --brand-2: #6ee7b7; /* второй акцент */
+        --radius: 16px;
+        --space: 16px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+          "Noto Sans", sans-serif;
+        color: var(--text);
+        background: radial-gradient(70% 80% at 20% 10%, #141827 0%, #0b0b10 60%),
+          #0b0b10;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .wrap {
+        max-width: 480px;
+        margin: 0 auto;
+        padding: var(--space);
+      }
+      .hero {
+        position: relative;
+        border-radius: calc(var(--radius) + 4px);
+        overflow: hidden;
+        min-height: 82vh;
+        display: grid;
+        place-items: end stretch;
+        background: #000;
+      }
+      .hero img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.68) saturate(105%);
+      }
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0) 38%,
+          rgba(0, 0, 0, 0.65) 100%
+        );
+      }
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        padding: 28px 18px;
+      }
+      .kicker {
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        font-weight: 600;
+        color: var(--brand);
+        opacity: 0.95;
+        font-size: 12px;
+      }
+      .title {
+        font-size: clamp(28px, 9vw, 40px);
+        line-height: 1.08;
+        margin: 0.35em 0 0.25em;
+        font-weight: 800;
+      }
+      .subtitle {
+        font-size: clamp(14px, 4vw, 16px);
+        color: var(--muted);
+        max-width: 48ch;
+      }
+      .hero-cta {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 18px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 14px 16px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        transition: transform 0.15s ease, width 0.15s;
+      }
+      .btn:active {
+        transform: translateY(1px) scale(0.99);
+      }
+      .btn.brand {
+        background: linear-gradient(135deg, var(--brand), #ff9f1c);
+        color: #1b1300;
+        border: none;
+      }
+      .btn.ghost {
+        background: transparent;
+        border: 1px dashed rgba(255, 255, 255, 0.25);
+      }
+      .btn,
+      .hero-cta .btn {
+        width: 100%;
+      }
+      section {
+        margin: 28px auto;
+      }
+      .cards {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .card {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.06),
+          rgba(255, 255, 255, 0.03)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: var(--radius);
+        padding: 16px;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .h2 {
+        font-size: clamp(20px, 6vw, 26px);
+        margin: 0 0 10px;
+        font-weight: 800;
+      }
+      .lead {
+        font-size: 16px;
+        color: #dfe3ea;
+      }
+      .kv {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        align-items: center;
+      }
+      .kv .v {
+        font-size: 15px;
+        font-weight: 600;
+      }
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+      .g-item {
+        height: 160px;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+      .g-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .timeline {
+        display: grid;
+        gap: 12px;
+      }
+      .tl-row {
+        display: grid;
+        grid-template-columns: 72px 1fr;
+        gap: 12px;
+        align-items: flex-start;
+      }
+      .time {
+        font-weight: 800;
+        color: var(--brand);
+        font-size: 14px;
+      }
+      .dot {
+        width: 8px;
+        height: 8px;
+        background: var(--brand-2);
+        border-radius: 50%;
+        box-shadow: 0 0 0 5px rgba(110, 231, 183, 0.15);
+        margin-top: 7px;
+      }
+      .countdown {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .cd {
+        min-width: 76px;
+        text-align: center;
+        padding: 12px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .cd .big {
+        font-size: 26px;
+        font-weight: 800;
+      }
+      .cd .lbl {
+        font-size: 11px;
+        color: var(--muted);
+      }
+      form {
+        display: grid;
+        gap: 12px;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 13px 14px;
+        border-radius: 12px;
+        background: #0f1117;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: var(--text);
+        font-size: 16px;
+      }
+      label {
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .form-row {
+        display: grid;
+        gap: 12px;
+      }
+      .success {
+        display: none;
+        padding: 12px 14px;
+        border-radius: 12px;
+        background: rgba(110, 231, 183, 0.12);
+        border: 1px solid rgba(110, 231, 183, 0.35);
+      }
+      footer {
+        margin: 48px auto 28px;
+        color: var(--muted);
+        text-align: center;
+      }
+      @media (hover: hover) {
+        .btn:hover {
+          transform: translateY(-1px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- CONFIG from Flask -->
+    <script>
+      const CONFIG = {{ config | tojson }};
+    </script>
+
+    <!-- HERO -->
+    <header class="wrap">
+      <div class="hero" id="hero">
+        <img id="heroImage" alt="Hero" />
+        <div class="hero-content">
+          <div class="kicker">Приглашение</div>
+          <h1 class="title" id="titleNames">Имя & Имя</h1>
+          <p class="subtitle" id="tagline">Текст приглашения</p>
+          <div class="hero-cta">
+            <a class="btn brand" id="btnMap" target="_blank" rel="noopener"
+              >Открыть карту</a
+            >
+            <a class="btn" id="btnInstagram" target="_blank" rel="noopener"
+              >Наш Instagram</a
+            >
+            <a class="btn ghost" id="btnWhatsApp" target="_blank" rel="noopener"
+              >Написать в WhatsApp</a
+            >
+            <button class="btn" id="btnMusic" style="display: none">
+              Включить музыку
+            </button>
+            <audio id="bgm" preload="none"></audio>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <!-- Дата/Адрес -->
+      <section>
+        <div class="cards">
+          <div class="card span6">
+            <h2 class="h2">Когда и где</h2>
+            <div class="lead" id="dateHuman">19.12.2025 / 17:00</div>
+            <p class="muted" id="address">Адрес: …</p>
+          </div>
+          <div class="card span6">
+            <h2 class="h2">До свадьбы осталось</h2>
+            <div class="countdown" id="countdown">
+              <div class="cd">
+                <div class="big" id="cdDays">—</div>
+                <div class="lbl">дней</div>
+              </div>
+              <div class="cd">
+                <div class="big" id="cdHours">—</div>
+                <div class="lbl">часов</div>
+              </div>
+              <div class="cd">
+                <div class="big" id="cdMinutes">—</div>
+                <div class="lbl">минут</div>
+              </div>
+              <div class="cd">
+                <div class="big" id="cdSeconds">—</div>
+                <div class="lbl">секунд</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Галерея -->
+      <section>
+        <h2 class="h2">Фотогалерея</h2>
+        <div class="gallery" id="gallery"></div>
+      </section>
+
+      <!-- Программа -->
+      <section>
+        <div class="card">
+          <h2 class="h2" id="programTitle">Программа вечера</h2>
+          <div class="timeline" id="timeline"></div>
+        </div>
+      </section>
+
+      <!-- Анкета гостя / RSVP -->
+      <section>
+        <div class="card">
+          <h2 class="h2">Анкета гостя</h2>
+          <p class="muted">
+            Пожалуйста, заполните форму, чтобы мы могли учесть ваше присутствие.
+          </p>
+          <form id="rsvpForm">
+            <div class="form-row">
+              <div>
+                <label>Имя и фамилия</label>
+                <input required name="name" placeholder="Имя" />
+              </div>
+              <div>
+                <label>Телефон (необязательно)</label>
+                <input name="phone" placeholder="+996 700 000 000" />
+              </div>
+            </div>
+            <div>
+              <label>Ваше присутствие</label>
+              <select required name="presence">
+                <option value="Да">Да</option>
+                <option value="К сожалению, нет">К сожалению, нет</option>
+                <option value="Сообщу позже">Сообщу позже</option>
+              </select>
+            </div>
+            <div>
+              <label>Сообщение (необязательно)</label>
+              <textarea
+                name="msg"
+                rows="4"
+                placeholder="Пожелания, вопросы…"
+              ></textarea>
+            </div>
+            <button class="btn brand" type="submit">Отправить</button>
+            <div class="success" id="formSuccess">
+              Спасибо! Мы получили вашу анкету.
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="wrap">
+      <div>С уважением, <span id="footNames">Жакшылык & Алина</span></div>
+      <div class="muted" id="footDate">19.12.2025</div>
+    </footer>
+
+    <script>
+      const $ = (sel) => document.querySelector(sel);
+      function fmtDateRus(d) {
+        return `${String(d.getDate()).padStart(2, "0")}.${String(
+          d.getMonth() + 1
+        ).padStart(2, "0")}.${d.getFullYear()} / ${String(
+          d.getHours()
+        ).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+      }
+      function hydrate() {
+        const names = `${CONFIG.couple.groom} & ${CONFIG.couple.bride}`;
+        $("#titleNames").textContent = names;
+        $("#footNames").textContent = names;
+        $("#tagline").textContent = CONFIG.tagline;
+        $("#address").textContent = `Адрес: ${CONFIG.address}`;
+        $("#heroImage").src = CONFIG.heroImage;
+        $("#programTitle").textContent = CONFIG.programTitle;
+        const dt = new Date(CONFIG.dateISO);
+        $("#dateHuman").textContent = fmtDateRus(dt);
+        $("#footDate").textContent = `${String(dt.getDate()).padStart(
+          2,
+          "0"
+        )}.${String(dt.getMonth() + 1).padStart(2, "0")}.${dt.getFullYear()}`;
+        $("#btnMap").href = CONFIG.mapUrl;
+        $("#btnMap").textContent = "Открыть карту";
+        $("#btnInstagram").href = CONFIG.instagramUrl;
+        $("#btnWhatsApp").href = `https://wa.me/${String(
+          CONFIG.whatsapp || ""
+        ).replace(/\D/g, "")}`;
+        if (CONFIG.music && CONFIG.music.enabled && CONFIG.music.src) {
+          const audio = $("#bgm");
+          audio.src = CONFIG.music.src;
+          const btn = $("#btnMusic");
+          btn.style.display = "inline-flex";
+          btn.textContent = CONFIG.music.autoPlay
+            ? "Выключить музыку"
+            : "Включить музыку";
+          if (CONFIG.music.autoPlay) {
+            audio.play().catch(() => {});
+          }
+          btn.addEventListener("click", () => {
+            if (audio.paused) {
+              audio.play();
+              btn.textContent = "Выключить музыку";
+            } else {
+              audio.pause();
+              btn.textContent = "Включить музыку";
+            }
+          });
+        }
+        const g = $("#gallery");
+        g.innerHTML = "";
+        (CONFIG.gallery || []).forEach((src, i) => {
+          const d = document.createElement("div");
+          d.className = "g-item";
+          d.innerHTML = `<img alt="gallery ${
+            i + 1
+          }" loading="lazy" src="${src}"/>`;
+          g.appendChild(d);
+        });
+        const tl = $("#timeline");
+        tl.innerHTML = "";
+        (CONFIG.schedule || []).forEach((row) => {
+          const el = document.createElement("div");
+          el.className = "tl-row";
+          el.innerHTML = `
+          <div class="time">${row.time}</div>
+          <div class="kv">
+            <div class="dot"></div>
+            <div class="v">${row.title}</div>
+          </div>`;
+          tl.appendChild(el);
+        });
+        const cdEls = {
+          d: $("#cdDays"),
+          h: $("#cdHours"),
+          m: $("#cdMinutes"),
+          s: $("#cdSeconds"),
+        };
+        function tick() {
+          const now = new Date();
+          let diff = Math.max(0, new Date(CONFIG.dateISO) - now);
+          const s = Math.floor(diff / 1000);
+          const days = Math.floor(s / 86400);
+          const hours = Math.floor((s % 86400) / 3600);
+          const minutes = Math.floor((s % 3600) / 60);
+          const seconds = s % 60;
+          cdEls.d.textContent = days;
+          cdEls.h.textContent = String(hours).padStart(2, "0");
+          cdEls.m.textContent = String(minutes).padStart(2, "0");
+          cdEls.s.textContent = String(seconds).padStart(2, "0");
+        }
+        tick();
+        setInterval(tick, 1000);
+        const form = $("#rsvpForm");
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const data = Object.fromEntries(new FormData(form).entries());
+          if (
+            CONFIG.form &&
+            CONFIG.form.mode === "endpoint" &&
+            CONFIG.form.endpoint
+          ) {
+            try {
+              const res = await fetch(CONFIG.form.endpoint, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data),
+              });
+              if (res.ok) {
+                $("#formSuccess").style.display = "block";
+                form.reset();
+              } else {
+                alert("Не удалось отправить форму. Проверьте endpoint.");
+              }
+            } catch (err) {
+              alert("Ошибка сети при отправке.");
+            }
+          } else {
+            const lines = [
+              `Имя: ${data.name}`,
+              `Телефон: ${data.phone || ""}`,
+              `Присутствие: ${data.presence}`,
+              `Сообщение: ${data.msg || ""}`,
+            ].join("\r\n"); // CRLF
+
+            const subject = (CONFIG.form && CONFIG.form.subject) || "RSVP";
+            const to =
+              (CONFIG.form && CONFIG.form.emailTo) || "zhorobaev228@gmail.com";
+
+            const mailto = `mailto:${encodeURIComponent(
+              to
+            )}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
+              lines
+            )}`;
+            const gmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+              to
+            )}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(
+              lines
+            )}`;
+
+            // Сначала пытаемся открыть веб-интерфейс Gmail (надёжнее, если нет почтового клиента).
+            // Если блокируется — откатываемся на mailto.
+            let opened = false;
+            try {
+              const w = window.open(gmail, "_blank", "noopener,noreferrer");
+              opened = !!w;
+            } catch (_) {}
+            if (!opened) {
+              window.location.href = mailto;
+            }
+
+            $("#formSuccess").style.display = "block";
+            form.reset();
+          }
+        });
+      }
+      document.addEventListener("DOMContentLoaded", hydrate);
+    </script>
+  </body>
+</html>

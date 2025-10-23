@@ -1,0 +1,44 @@
+{
+  "couple": {
+    "groom": "Жакшылык",
+    "bride": "Алина"
+  },
+  "tagline": "С радостью приглашаем вас разделить с нами счастье неповторимого события — нашей свадьбы!",
+  "dateISO": "2025-12-19T17:00:00+06:00",
+  "programTitle": "Программа вечера",
+  "address": "Сухэ-Батор көчөсү, 15/1,  \"Улуу Тоо\"",
+  "mapUrl": "https://maps.app.goo.gl/nGVLExCaaqoLLFdk8",
+  "instagramUrl": "https://www.instagram.com/smuzo.kg",
+  "whatsapp": "+996707145125",
+  "heroImage": "/static/images/hero.jpg",
+  "gallery": [],
+  "music": {
+    "enabled": false,
+    "src": "https://www.youtube.com/watch?v=oeLvR-JtDRE&list=RDGMEMHDXYb1_DDSgDsobPsOFxpAVMoeLvR-JtDRE&start_radio=1",
+    "autoPlay": true
+  },
+  "schedule": [
+    {
+      "time": "17:00",
+      "title": "Сбор гостей"
+    },
+    {
+      "time": "18:00",
+      "title": "Начало"
+    },
+    {
+      "time": "18:30",
+      "title": "Регистрация"
+    },
+    {
+      "time": "19:00",
+      "title": "Ужин и танцы"
+    }
+  ],
+  "form": {
+    "mode": "mailto",
+    "subject": "RSVP на свадьбу",
+    "emailTo": "zhorobaev228@gmail.com",
+    "endpoint": ""
+  }
+}
