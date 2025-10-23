@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(move \"C:\\Users\\Admin User 9\\projects\\Wedding\\templates\\index.html\" \"C:\\Users\\Admin User 9\\projects\\Wedding\\views\\index.ejs\")",
+      "Bash(move:*)",
+      "Bash(cmd /c \"move \"\"C:\\Users\\Admin User 9\\projects\\Wedding\\templates\\index.html\"\" \"\"C:\\Users\\Admin User 9\\projects\\Wedding\\views\\index.ejs\"\" && move \"\"C:\\Users\\Admin User 9\\projects\\Wedding\\templates\\admin.html\"\" \"\"C:\\Users\\Admin User 9\\projects\\Wedding\\views\\admin.ejs\"\"\")",
+      "Bash(powershell -Command:*)",
+      "Bash(npm install:*)",
+      "Bash(node server.js:*)",
+      "Bash(dir:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

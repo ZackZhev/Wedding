@@ -276,9 +276,9 @@
     </style>
   </head>
   <body>
-    <!-- CONFIG from Flask -->
+    <!-- CONFIG from Express -->
     <script>
-      const CONFIG = {{ config | tojson }};
+      const CONFIG = <%- JSON.stringify(config) %>;
     </script>
 
     <!-- HERO -->
